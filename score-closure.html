@@ -1,0 +1,16 @@
+<script>
+    function score() {
+        let sc = 0;
+        return function(passed) {
+            if (passed) {
+                sc++;
+            }
+            console.log(sc);
+        }
+    }
+    let myScore = score();
+    myScore(true);
+    myScore(false);
+    myScore(true);
+    myScore(true);
+</script>
