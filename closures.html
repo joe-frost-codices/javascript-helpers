@@ -1,0 +1,79 @@
+<!doctype html>
+<html>
+<head>
+</head>
+    <body>
+        <select name="goods" id="product">
+            <option value="fridge">Fridge</option>
+            <option value="dishwasher">Dishwasher</option>
+            <option value="microwave">Microwave</option>
+            <option value="freezer">Freezer</option>
+        </select>
+        <br />
+        <br />
+        <select name="quantity" id="qty">
+        </select>
+        <br />
+        <br />
+        <input type="button" value="Update Quantity" id="update-quantity" />
+        <br />
+        <br />
+        <div id="quantity-amount">
+            <div>Fridge: <span id="fridge-qty">0</span></div>
+            <div>Dishwasher: <span id="dishwasher-qty">0</span></div>
+            <div>Microwave: <span id="microwave-qty">0</span></div>
+            <div>Freezer: <span id="freezer-qty">0</span></div>
+        </div>
+    </body>
+
+
+<script>
+
+let whiteGoods = newStock();
+init();
+
+function init() {
+    let qtyoption;
+    for (let i=-5; i<=5; i++) {
+        qtyoption += `<option value="${i}" `;
+        if (i===1) { qtyoption += `selected`; }
+        qtyoption += ` >${i}</option>`;
+    }
+    document.querySelector("#qty").innerHTML=qtyoption;
+
+    document.getElementById("update-quantity").addEventListener("click",()=>{
+        let e = document.getElementById("product");
+        let product = e.options[e.selectedIndex].value;
+        let f = document.getElementById("qty");
+        let qty=f.options[f.selectedIndex].value;
+        whiteGoods(product,qty);
+    })
+}
+
+function newStock() {
+
+    let count=0;
+    
+    let products = {
+        dishwasher: 0,
+        fridge: 0,
+        microwave: 0,
+        freezer: 0
+    }
+    
+    return function(product, qty) {
+        if (!product in products) {
+            console.log("Unknown object");
+        } else {
+            count++;
+            products[product] += parseInt(qty);
+            if (products[product] <= -1) {
+                products[product] = 0;
+            }
+            document.querySelector(`#${product}-qty`).textContent = products[product];
+        }
+    }
+}
+
+</script>
+</html>
