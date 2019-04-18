@@ -1,0 +1,92 @@
+<script>
+
+
+let allQuestions = {
+    0: {
+        question: "What is the capital of France?",
+        correct: 1,
+        answers: {
+            0: {
+                text: "Johannasburg"
+            },
+            1: {
+                text: "Paris"
+            },
+            2: {
+                text: "New York"
+            },
+            3: {
+                text: "Sydney"
+            }
+        }
+    },
+    1: {
+        question: "Which is the largest Ocean?",
+        correct: 3,
+        answers: {
+            0: {
+                text: "Indian"
+            },
+            1: {
+                text: "Atlantic"
+            },
+            2: {
+                text: "Southern"
+            },
+            3: {
+                text: "Pacific"
+            }
+        }
+    },
+    2: {
+        question: "Where is Westminster cathedral located?",
+        correct: 1,
+        answers: {
+            0: {
+                text: "Manchester"
+            },
+            1: {
+                text: "London"
+            },
+            2: {
+                text: "Southampton"
+            },
+            3: {
+                text: "Leeds"
+            }
+        }
+    }
+}
+
+;(function(){
+    function Question(questions) {
+        let maxQuestion = Object.keys(questions).length;
+        let randomQuestion = Math.floor(Math.random() * maxQuestion);
+        this.question = questions[randomQuestion].question;
+        this.correct = questions[randomQuestion].correct;
+        this.answers = questions[randomQuestion].answers;
+    }
+
+    Question.prototype.displayQuestion = function() {
+        console.log(`%c${this.question}`,`font-weight:bold;`);
+    };
+
+    Question.prototype.displayAnswers = function() {
+        for (let answer in Object.keys(this.answers)) {
+            if (parseInt(answer)===parseInt(this.correct)) {
+                console.log(`%c  ${answer}: ${this.answers[answer].text}`,`color:green; font-weight:bold;`);
+            } else {  
+                console.log(`%c  ${answer}: ${this.answers[answer].text}`,`color:red;`);
+            }
+        }
+    };
+
+    let q1 = new Question(allQuestions);
+    let q2 = new Question(allQuestions)
+    console.log(q1);
+    q1.displayQuestion();
+    q1.displayAnswers();
+    q2.displayQuestion();
+    q2.displayAnswers();
+})();
+</script>
