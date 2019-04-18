@@ -1,0 +1,55 @@
+<script>
+var user = {
+    name: '',
+    age: 0,
+    job: '',
+    presentation: function(style, timeOfDay) {
+        if (style==='formal') {
+            console.log("Good " + timeOfDay + " I'm " + this.name + ", age " + this.age + ". I'm a " + this.job);
+        } else if (style==='friendly') {
+            console.log(sentenceCase(timeOfDay) + " - how's it going? I'm " + this.name + ", age " + this.age + ". I'm a " + this.job);
+        }
+    }
+}
+
+let jack = {
+    name: "Jack",
+    age: 25,
+    job: "Telesales Operator"
+};
+
+user.presentation.call(jack,"friendly","morning");
+user.presentation.apply(jack,["formal","afternoon"]);
+
+let jackFriendly = user.presentation.bind(jack,"friendly");
+jackFriendly("good day");
+
+function sentenceCase(str) {
+    return str.charAt(0).toUpperCase()+str.slice(1)
+}
+
+var years = [1990,1965,1937,2005,1998];
+
+function arrayCalc(arr, fn) {
+    let arrRes = [];
+    for (let i=0; i < arr.length; i++) {
+        arrRes.push(fn(arr[i]));
+    }
+    return arrRes;
+}
+
+function calculateAge(el) {
+    return 2019 - el;
+}
+
+function isFullAge(limit, el) {
+    return el >= limit;
+}
+
+let ages = arrayCalc(years, calculateAge);
+let fullJapan = arrayCalc(ages,isFullAge.bind(this,20));
+console.log(ages);
+console.log(fullJapan);
+
+
+</script>
