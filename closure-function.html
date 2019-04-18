@@ -1,0 +1,23 @@
+<script>
+let taxCalc = (() => {
+    let amount = 0;
+    let tax = 1.2;
+    return {
+        add: function(newAmount) {
+            amount+=newAmount;  
+        },
+        getFullAmount: function() {
+            return amount * tax;
+        }
+    }
+})()
+
+let myTax = taxCalc;
+
+myTax.add(50);
+myTax.add(50);
+
+console.log(myTax.getFullAmount());
+
+
+</script>
