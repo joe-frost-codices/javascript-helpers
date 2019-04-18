@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <style type="text/css">
+            body {background:#e1e1e1; font-family:arial, helvetica, sans-serif; color:#999999}
+            .container {
+                min-width:200px;
+                min-height:100px;
+                background:#ffffff;
+                margin-bottom:15px;
+                border: 1px solid #cccccc;
+                padding:15px;
+            }
+            #dice-roll, #dice-roll-total, #p1-score, #p2-score {font-weight:bold; padding:5px; background: #555; color: #fff; display:inline-block;}
+            .panel-active {
+                background-color: rgb(253, 238, 103);
+                color:#000000
+            }
+            .panel-hide {display:none;}
+            .dice-panel {background:#ccc; color:#000;}
+        </style>
+        <script src="./dice.js" defer ></script>
+    </head>
+    <body>
+        <div id="root"></div>
+        <div class="board">
+            <div id="player-one" class="container">
+                Player One
+                <button id="roll-player-one">Roll Dice</button>
+                <button id="end-go-player-one">End Go</button>
+                <div id="p1-score"></div>
+                <br />
+                Games Won: <span id="p1-games-won">0</span>
+            </div>
+            <div id="player-two" class="container">
+                player Two
+                <button id="roll-player-two">Roll Dice</button>
+                <button id="end-go-player-two">End Go</button>
+                <div id="p2-score"></div>
+                <br />
+                Games Won: <span id="p2-games-won">0</span>
+            </div>
+            <div class="container">
+                Dice Roll --
+                Rolled: <span id="dice-roll">--</span> --
+                Current Total: <span id="dice-roll-total">--</span>
+            </div>
+            <div id="win-panel" class="container panel-hide panel-active"><div id="winner-display"></div><button id="new-game">New Game</button></div>
+        </div>
+    </body>
+</html>
