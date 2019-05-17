@@ -1,0 +1,394 @@
+
+const ROOT = document.getElementById("root")
+const container = document.createElement("div")
+const buttonContainer = document.createElement("div")
+const appContainer = document.createElement("div")
+const appContainerInner = document.createElement("div")
+const appContainerInnerInner = document.createElement("div")
+const fader = document.createElement("div")
+const selector = document.createElement("div")
+let timeout = []
+let gamesAmount = 0;
+
+container.classList = "container"
+buttonContainer.classList = "button-container"
+appContainer.classList = "app-container"
+appContainerInner.classList = "app-container-inner"
+appContainerInnerInner.classList = "app-container-inner-inner"
+selector.classList = "selector"
+fader.classList = "fader"
+
+
+ROOT.appendChild(container)
+document.body.appendChild(selector)
+container.appendChild(buttonContainer)
+container.appendChild(appContainer)
+appContainer.appendChild(appContainerInner)
+appContainerInner.appendChild(fader)
+appContainerInner.appendChild(appContainerInnerInner)
+
+appContainerInnerInner.innerHTML = ""
+selector.innerHTML = "<select name='games' id='games-override'><option value='0'>0</option><option value='1'>1</option><option value='2'>2</option><option value='3'>3</option><option value='4'>4</option><option value='5'>5</option></select>";
+const fadeInOut = () => {
+    timeout[0] = setTimeout(() => {
+        fader.classList.add("fader-transition")
+    }, 2000)
+    timeout[1] = setTimeout(() => {
+        createEditStepOne()
+    }, 2500)
+    timeout[2] = setTimeout(() => {
+        fader.classList.remove("fader-transition")
+    }, 3000)
+}
+
+function cleartimeout() {
+    for (i=0 ; i < timeout.length ; i++) {
+        clearTimeout(timeout[i])
+    }
+    document.querySelector('.fader').classList.remove("fader-transition")
+}
+
+const createEditStepOne = () => {
+    
+    if (gamesAmount == 0 ) {
+        appContainerInnerInner.innerHTML = 
+            "<div class='create-edit-container-one'>" +
+                "<div class='heading'>Create Quiz</div>" +
+                "<div class='tagline'>Enter your catchy name and tagline</div>" +
+                "<div class='text-input-outer'><input class='needed-text-input text-input' type='text' placeholder='Game Name' /></div>" +
+                "<div class='text-input-outer'><input class='needed-text-input text-input' type='text' placeholder='Game Tagline' /></div>" +
+                "<div class='button-left medium-grey-back grey-text' id='set-questions'>Choose Game Mode<div datatype='go-arrow' class='button-left-arrow-right display-none'></div></div>" +
+            "</div>"
+        } else {
+        appContainerInnerInner.innerHTML = 
+        "<div class='create-edit-container-one'>" +
+            "<div class='heading'>Create Quiz</div>" +
+            "<div class='tagline'>Enter your catchy name and tagline</div>" +
+            "<div class='text-input-outer'><input class='needed-text-input text-input' type='text' placeholder='Game Name' /></div>" +
+            "<div class='text-input-outer'><input class='needed-text-input text-input' type='text' placeholder='Game Tagline' /></div>" +
+            "<div class='button-left medium-grey-back grey-text' id='set-questions'>Choose Game Mode<div datatype='go-arrow' class='button-left-arrow-right display-none'></div></div>" +
+            "<div class='button-left orange-back white-text box-shadow' id='back-to-create-edit'>Quiz List<div class='button-left-arrow-left'></div></div>" +    
+            "</div>"
+            document.querySelector("#back-to-create-edit").addEventListener("click", (el)=> {
+                createEditStepFive()
+            })
+    }    
+    
+    let greenLight = [];
+    let successButton = document.getElementById("set-questions")
+    let textInputs = document.querySelectorAll(".needed-text-input")
+    for (let i=0; i< textInputs.length; i++ ) {
+        textInputs[i].value != "" ? greenLight[i] = true :  greenLight[i] = false
+        textInputs[i].addEventListener('keyup', (el) => {
+            el.target.value != "" ? greenLight[i] = true :  greenLight[i] = false
+            checkGreenLight()
+        })
+    } 
+    checkGreenLight = () => {
+        let greenLit = true;
+        for (let i=0; i<greenLight.length; i++) {
+            greenLight[i] ? null : greenLit = false
+        }
+        greenLit ? setButtonTrue() : setButtonFalse()
+    }
+    listener = (el)=> {
+        createEditGameMode();
+    }
+    setButtonTrue = () => {
+        successButton.classList = "button-left green-back white-text button-green box-shadow"
+        successButton.addEventListener("click", listener)
+    }
+    setButtonFalse =() => {
+        successButton.classList = "button-left medium-grey-back grey-text"
+        successButton.removeEventListener("click", listener)
+    }
+    
+}
+
+const createEditGameMode = () => {
+    appContainerInnerInner.innerHTML = 
+        "<div class='create-edit-container-five'>" +
+            "<div class='heading'>Choose Game Mode</div>" +
+            "<div class='game-mode-select-outer'>" +
+                "<div class='game-mode-select box-shadow'>" +
+                    "<div class='game-mode-header'>Knockout</div>" +
+                    "<p class='game-mode-para'>1. To win a player must answer all of the set questions correctly.</p>" +
+                    "<p class='game-mode-para'>2. If a player gets a question wrong, they are eliminated and can no longer answer questions.</p>" +
+                    "<p class='game-mode-para'>3. The game ends when all questions are answered or everyone gets knocked out.</p>" +
+                "</div>" +
+                "<div class='game-mode-select box-shadow'>" +
+                    "<div class='game-mode-header'>Points Mode</div>" +
+                    "<p class='game-mode-para'>1. The player with the highest amount of points at the end wins.</p>" +
+                    "<p class='game-mode-para'>2. Players with correct answers gain points. Faster answers gain more points.</p>" +
+                    "<p class='game-mode-para'>3. Players with incorrect answers lose points. Faster answers lose more points.</p>" +
+                    "<p class='game-mode-para'>4. If a player doesn't answer, they don't win or lose any points... play strategically.</p>" +
+                "</div>" +
+            "</div>" +
+            "<div class='button-left green-back white-text button-green box-shadow' id='set-questions'>Set Questions</div>" +    
+            "<div class='button-left orange-back white-text box-shadow' id='back-to-create-edit'>Quiz Name<div class='button-left-arrow-left'></div></div>" +    
+            "</div>"
+    document.getElementById("set-questions").addEventListener("click", (el)=> {
+        createEditStepTwo()
+    })   
+    document.getElementById("back-to-create-edit").addEventListener("click", (el)=> {
+        createEditStepOne()
+    })
+}
+
+
+const createEditStepTwo = () => {
+    appContainerInnerInner.innerHTML = 
+        "<div class='create-edit-container-two'>" +
+            "<div class='heading-game-show'>Quiz 1</div>" +
+            "<div class='tagline'>tagline for game show 1</div>" +
+            "<div class='info-container'>" +
+                "<div class='select-container'>" +
+                    "<select name='question' class='select-box orange-back white-text'><option>Custom Question</option><option>Technology</option><option>History</option></select>" +
+                    "<div class='select-box-arrow'></div>" +
+                "</div>" +
+                "<div class='clear-fix'></div>" +
+                "<div class='radio-container'>" +
+                    "<div class='radio-container-inner orange-back white-text'>" +
+                        "<input class='radio-button' type='radio' name='gameType' value='easy' checked='checked' /> Easy" +
+                    "</div>" +
+                    "<div class='radio-container-inner medium-grey-back'>" +
+                        "<input class='radio-button' type='radio' name='gameType' value='medium' /> Medium" +
+                    "</div>" +
+                    "<div class='radio-container-inner medium-grey-back'>" +
+                        "<input class='radio-button' type='radio' name='gameType' value='hard' /> Hard" +
+                    "</div>" +
+                "</div>" +
+            "</div>" +
+            "<div class='info-container'>" +
+                "<div>Time To Answer</div>" +
+                "<div class='select-container'>" +
+                    "<select name='timeToAnswer' class='select-box orange-back white-text'><option>10 Seconds</option><option>15 Seconds</option><option>20 Seconds</option></select>" +
+                    "<div class='select-box-arrow'></div>" +
+                "</div>" +
+            "</div>" +
+            "<div class='info-container'>" +
+                "<div class='tagline'>Quantity</div>" +
+                "<div class='question-amount-outer'><span id='number-up'>1</span> " +
+                    "<div class='select-less orange-back white-text' id='select-less'>-" +
+                    "</div>" +
+                    "<div class='select-more orange-back white-text' id='select-more'>+" +
+                    "</div>" +
+                "</div>" +
+            "</div>" +
+            "<div class='button-left green-back white-text button-green box-shadow' id='add-questions'>Add Questions</div>" +    
+            "<div class='button-left orange-back white-text box-shadow' id='back-to-create-edit'>Game Mode<div class='button-left-arrow-left'></div></div>" +    
+        "</div>" +
+        "<div class='create-edit-container-three'></div>"
+    let number = 1;    
+    document.getElementById("back-to-create-edit").addEventListener("click", (el)=> {
+        createEditGameMode()
+    })
+    document.getElementById("add-questions").addEventListener("click", (el) => {
+        createEditStepThree()
+    })
+    document.getElementById("select-more").addEventListener("click",(el) => {
+        number++;
+        document.getElementById("number-up").innerText = number
+    })
+    document.getElementById("select-less").addEventListener("click",(el) => {
+        number--
+        number < 1 ? number = 1 : null
+        document.getElementById("number-up").innerText = number
+    })
+    let radioButtons = document.querySelectorAll(".radio-container-inner")
+    for (i=0; i<radioButtons.length; i++) {
+        radioButtons[i].addEventListener("click", (e) => {
+            for (j=0; j<radioButtons.length; j++) {
+                radioButtons[j].classList.remove("orange-back")
+                radioButtons[j].classList.remove("white-text")
+                radioButtons[j].classList.add("medium-grey-back")
+                radioButtons[j].querySelector(".radio-button").setAttribute("checked","none")
+
+            }
+            e.target.classList.remove("medium-grey-back")
+            e.target.classList.add("orange-back")
+            e.target.classList.add("white-text")
+            e.target.querySelector(".radio-button").setAttribute("checked","checked")
+        })
+    }
+}
+
+const createEditStepThree = () => {
+    document.querySelector(".create-edit-container-three").innerHTML =
+        "<div class='question-cycle-container'>" +
+            "<div class='question-cycle-selector-button medium-grey-back'>" +
+                "<div class='button-left-arrow-left'></div>" +
+            "</div>" +
+            "<div class='question-cycle-text'>Question 1/8</div>" +
+            "<div class='question-cycle-selector-button orange-back box-shadow'>" +
+                "<div class='button-left-arrow-right'></div>" +
+            "</div>" +
+        "</div>" +
+        "<div class='text-area-container'>" +
+            "<textarea class='text-area' placeholder='Write your question here'></textarea>" +
+        "</div>" +
+        "<div class='correct-answer-container green-back white-text'>" +
+            "Correct Answer" +
+            "<div class='text-input-outer'><input class='text-input' placeholder='Write the correct answer here' /></div>" +
+        "</div>" +
+        "<div class='text-input-outer'><input class='text-input' placeholder='Write answer two here' /></div>" +
+        "<div class='text-input-outer'><input class='text-input' placeholder='Write answer three here' /></div>" +
+        "<div class='text-input-outer'><input class='text-input' placeholder='Write answer four here' /></div>" +
+        "<div class='button-left white-text green-back button-green box-shadow' id='confirm-all-ok'>Confirm All OK</div>" +
+        "<div class='button-small white-text orange-dark-back'>X Remove This Question</div>" +
+        "<div class='button-small white-text orange-darker-back'>X Remove All Questions</div>" 
+        document.getElementById('confirm-all-ok').addEventListener("click", (el)=> {
+            createEditStepFour();
+        })
+}
+
+const createEditStepFour = () => {
+    appContainerInnerInner.innerHTML = 
+        "<div class='create-edit-container-five'>" +
+            "<div class='save-game-block'>" +
+                "<div class='heading-small'>90s Films Quiz</div>" +
+                "<div class='tagline'>Film trivia from the 90s</div>" +
+                "<div class='save-feature-outer'>" +
+                    "<div class='save-feature-inner'>" +
+                        "<div class='save-feature-top orange-back'>Game Mode</div>" +
+                        "<div class='save-feature-lower'>Knockout</div>" +
+                    "</div>" +
+                    "<div class='save-feature-inner'>" +
+                        "<div class='save-feature-top orange-back'>Total Questions</div>" +
+                        "<div class='save-feature-lower'>2</div>" +
+                    "</div>" +
+                    "<div class='save-feature-inner'>" +
+                        "<div class='save-feature-top orange-back'>Time To Answer</div>" +
+                        "<div class='save-feature-lower'>10 seconds</div>" +
+                    "</div>" +
+                "</div>" +    
+            "</div>" +
+            "<div class='button-left green-back white-text box-shadow' id='save-show'>Save Quiz</div>" +    
+            "<div class='button-left orange-back white-text box-shadow' id='edit-show'>Edit Questions<div class='button-left-arrow-left'></div></div>" +    
+            "<div class='saved-games-info green-text display-none' id='show-saved'>Saved Game 1/5</div>" +
+            "<div class='button-left orange-back white-text display-none box-shadow' id='new-show'>Create Quiz</div>" +    
+       "</div>"
+    document.getElementById("edit-show").addEventListener("click", (el)=> {
+        createEditStepTwo()
+        createEditStepThree()
+    })   
+    document.getElementById("save-show").addEventListener("click", (el) => {
+        gamesAmount++
+        createEditStepFive()
+    })
+    document.getElementById("new-show").addEventListener("click", (el) => {
+        createEditStepOne()
+    })
+}
+
+
+const createEditStepFive = () => {
+    appContainerInnerInner.innerHTML = 
+        "<div class='create-edit-container-five'>" +
+            "<div class='heading-small'>Quiz List</div>" +
+            "<div class='info-container' id='games-list'>" +
+            "</div>" +
+            "<div class='button-left green-back white-text button-green box-shadow' id='new-quiz'>Create New Quiz</div>" +       
+       "</div>"
+
+    if (gamesAmount >= 5) {
+        document.getElementById("new-quiz").classList="red-warning"
+        document.getElementById("new-quiz").innerText = "Maximum number of games reached, delete one of the above games to create a new one"   
+    }    
+    
+    let gamesList = document.getElementById("games-list")
+    for (let i=1; i<=gamesAmount; i++) {
+        let divi = document.createElement("div")
+        let divInner = document.createElement("div")
+        let divOptions = document.createElement("div")
+        let divDelete = document.createElement("div")
+        divi.classList="edit-gameshow-single white-back box-shadow"
+        divInner.classList="edit-gameshow-single-heading"
+        divOptions.classList="game-options"
+        divDelete.classList="game-options-delete"
+        gamesList.appendChild(divi)
+        divi.appendChild(divInner)
+        divInner.innerHTML = "<div class='edit-gameshow-single-left'>" +
+            "Quiz " + i +
+            "<div class='dark-grey-text'>12 Questions</div>" +
+            "<div class='dark-grey-text'>Points Mode</div>" +
+            "</div>" + 
+            "<div class='edit-gameshow-single-right'>" +
+            "<div class='dark-grey-text'>10/03/2019</div>" +
+            "<div class='red-text'>Unplayed</div>" +
+            "</div>"
+        divi.appendChild(divOptions)
+        divOptions.innerHTML = 
+        "<div class='button-options-list quiz-edit white-text orange-back box-shadow'>Edit Quiz</div>"
+        divi.appendChild(divDelete)
+        divDelete.innerHTML =
+        "<div class='button-options-list quiz-del white-text orange-darker-back'>&nbsp;<div class='cross-left-one cross-left-small'></div><div class='cross-left-two cross-left-small'></div></div>" 
+    }
+       
+    document.getElementById("new-quiz").addEventListener("click", (el) => {
+        createEditStepOne()
+    })   
+    let quizEditButtons = document.querySelectorAll(".quiz-edit")
+    quizEditButtons.forEach((button) => {
+        button.addEventListener("click", () => {createEditStepOne()})
+    })
+}
+
+
+
+const reload = () => {
+
+    buttonContainer.innerHTML = 
+        "<img src='media/quiz-kit-logo.svg' class='side-logo' />" +
+        "<div class='button-left text-shadow white-text orange-back button-orange box-shadow' id='create-button'>Create/Edit Quiz</div>" +
+        "<div class='button-left text-shadow white-text purple-back button-purple box-shadow' id='ask-it-button'><div class='swash-overlay'><div class='swash-overlay-inner'>New</div></div><div class='swash-underlay'>New</div>Configure Ask It</div>" +
+        "<div class='button-left text-shadow white-text blue-back button-blue box-shadow' id='how-to-use-button'>How to Use</div>" +
+        "<div class='version'>Alpha Build 0.2.9</div>"
+
+    document.getElementById("create-button").classList.add("button-orange-selected")
+    if (gamesAmount == 0 ) {
+        cleartimeout()
+        createEditStepOne()
+    } else {
+        cleartimeout()
+        createEditStepFive()
+    }
+    
+    document.getElementById("create-button").addEventListener("click", (el) => {
+        el.target.classList.add("button-orange-selected")
+        document.getElementById("ask-it-button").classList.remove("button-purple-selected")
+        document.getElementById("how-to-use-button").classList.remove("button-blue-selected")
+        cleartimeout()
+
+        if (gamesAmount == 0 ) {
+        cleartimeout()
+        createEditStepOne()
+    } else {
+        cleartimeout()
+        createEditStepFive()
+    }
+    })    
+
+    document.getElementById("ask-it-button").addEventListener("click", (el) => {
+        el.target.classList.add("button-purple-selected")
+        document.getElementById("create-button").classList.remove("button-orange-selected")
+        document.getElementById("how-to-use-button").classList.remove("button-blue-selected")
+        cleartimeout();
+        appContainerInnerInner.innerHTML="Ask It Info"
+    })
+
+    document.getElementById("how-to-use-button").addEventListener("click", (el) => {
+        el.target.classList.add("button-blue-selected")
+        document.getElementById("create-button").classList.remove("button-orange-selected")
+        document.getElementById("ask-it-button").classList.remove("button-purple-selected")
+        cleartimeout()
+        appContainerInnerInner.innerText="How to Use Pop Up"
+    })
+ 
+}
+
+document.getElementById("games-override").addEventListener("change", (el) => {
+    gamesAmount = el.target.value
+    reload()
+})
+reload()
