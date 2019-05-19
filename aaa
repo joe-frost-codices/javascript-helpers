@@ -9,6 +9,7 @@ const fader = document.createElement("div")
 const selector = document.createElement("div")
 let timeout = []
 let gamesAmount = 0;
+let started;
 
 container.classList = "container"
 buttonContainer.classList = "button-container"
@@ -346,6 +347,7 @@ const reload = () => {
         "<div class='version'>Alpha Build 0.2.9</div>"
 
     document.getElementById("create-button").classList.add("button-orange-selected")
+    
     if (gamesAmount == 0 ) {
         cleartimeout()
         createEditStepOne()
@@ -355,6 +357,12 @@ const reload = () => {
     }
     
     document.getElementById("create-button").addEventListener("click", (el) => {
+        if (!started) {
+            document.querySelector(".button-container").classList.add("move-button-container")
+            document.querySelector(".app-container").classList.add("move-app-container")
+            started = true
+        }
+
         el.target.classList.add("button-orange-selected")
         document.getElementById("ask-it-button").classList.remove("button-purple-selected")
         document.getElementById("how-to-use-button").classList.remove("button-blue-selected")
