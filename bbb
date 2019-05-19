@@ -27,21 +27,52 @@ body {
 }
 
 .button-container {
-    max-width: 220px;
+    max-width: 220px; /* set transition transform */
     min-width: 220px;
     padding:15px 10px 15px 15px;
     background:#ffffff;
+    margin-left:40%;
+}
+.move-button-container {
+    animation: move-left;
+    animation-fill-mode: forwards;
+    animation-duration: 1s;
+}
+@keyframes move-left {
+    0% {
+        margin-left:40%;
+    }
+    100% {
+        margin-left:0;
+    }
 }
 
 .app-container {
+    display:block; /* change to none or block */
+    opacity:0;
     position:relative;
     margin-left:15px;
     background: #ffffff;
     width:100%;
+    
+}
+
+.move-app-container {
+    animation: fade-in;
+    animation-fill-mode: forwards;
+    animation-duration: 1s;
+}
+
+@keyframes fade-in {
+    0% {
+        opacity:0;
+    }
+    100% {
+        opacity:1;
+    }
 }
 
 .app-container-inner {
-    
     position:relative;
     background:#dddddd;
     border-radius:10px;
