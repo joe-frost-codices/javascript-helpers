@@ -1,10 +1,12 @@
 <script>
 
 const multiply = (x,y) => x*y
+const divide = (x,y) => x*y
+
 
 console.log(multiply(10,10))
 
-const checkMultiplyIsSafe = func => (...args) => {
+const checkSumIsSafe = func => (...args) => {
 	if (args.length > 2) { console.log("more than 2 numbers"); return null; }
 	if (args[0] === 0) { console.log("first number is 0"); return null; }
 	if (args[1] === 0) { console.log("second number is 0"); return null; }
@@ -13,7 +15,10 @@ const checkMultiplyIsSafe = func => (...args) => {
 	return func(...args)
 }
 
-const safeMultiply = checkMultiplyIsSafe(multiply)
+
+
+const safeMultiply = checkSumIsSafe(multiply)
+const safeDivision = checkSumIsSafe(divide)
 
 
 console.log(safeMultiply(5,5))
@@ -23,5 +28,7 @@ console.log(safeMultiply(10,0))
 console.log(safeMultiply("a",5))
 
 
+console.log(safeDivision(10,5))
+console.log(safeDivision("eigth",4))
 
 </script>
