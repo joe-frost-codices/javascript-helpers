@@ -5,11 +5,11 @@ const multiply = (x,y) => x*y
 console.log(multiply(10,10))
 
 const checkMultiplyIsSafe = func => (...args) => {
-	if (args[2] !== undefined) { console.log("more than 2 numbers"); return null; }
+	if (args.length > 2) { console.log("more than 2 numbers"); return null; }
 	if (args[0] === 0) { console.log("first number is 0"); return null; }
 	if (args[1] === 0) { console.log("second number is 0"); return null; }
-	if (args[0] !== typeof(number)) {console.log("first arg is NAN"); return null;}
-	if (args[1] !== typeof(number)) {console.log("second arg is NAN"); return null;}
+	if (typeof(args[0]) !== "number") {console.log("first arg is NAN"); return null;}
+	if (typeof(args[1]) !== "number") {console.log("second arg is NAN"); return null;}
 	return func(...args)
 }
 
