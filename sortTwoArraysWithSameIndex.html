@@ -1,0 +1,18 @@
+<script>
+  const namesArray=["three","fifteen","eleven","twenty"]
+  const numbersArray=[3, 15, 11, 20]
+  const newArray = []
+  for (let i=0; i<namesArray.length; i++) {
+    newArray.push({answer:namesArray[i], amount:numbersArray[i]})
+  }
+  newArray.sort((a, b) => a.amount - b.amount);
+  newArray.reverse()
+  const newNamesArray=[]
+  const newNumbersArray=[]
+  for (let i=0; i<namesArray.length; i++) {
+    newNamesArray.push(newArray[i].answer)
+    newNumbersArray.push(newArray[i].amount)
+  }
+  console.log(newNamesArray)
+  console.log(newNumbersArray)
+</script>
