@@ -1,0 +1,30 @@
+<script>
+  console.log("start")
+  const state = {
+    counter:0,
+    names:[
+      {name:"Joe",age:21},
+      {name:"Edward",age:35}
+    ]
+  }
+  const newState = {
+    ...state,
+    counter:state.counter+1, 
+    names:[
+        ...state.names,
+        {name:"James",age:25}
+      ]
+    }
+  const newestState = {
+    ...newState,
+    counter:state.counter+2,
+    names:[
+      ...newState.names.filter(person=>person.name!=="Edward")
+    ]
+  }  
+  console.log(state)
+  console.log(newState)
+  console.log(state)
+  console.log(newestState)
+  console.log(state)
+</script>
