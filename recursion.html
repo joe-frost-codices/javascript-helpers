@@ -1,0 +1,37 @@
+<script>
+
+const makeTree = (list, parent) => {
+	const node = {}
+	list
+		.filter(c=>c.parent===parent)
+		.forEach(c=> node[c.id] = makeTree(list,c.id))
+	return node
+}
+
+const myList = [
+	{id:"animals",parent:null},
+	{id:"cat",parent:"animals"},
+	{id:"dog",parent:"animals"},
+	{id:"bird",parent:"animals"},
+	{id:"fish",parent:"animals"},
+	{id:"fresh water",parent:"fish"},
+	{id:"tropical",parent:"fish"},
+	{id:"persian", parent:"cat"},
+	{id:"siamese", parent:"cat"},
+	{id:"burmese", parent:"cat"},
+	{id:"rex", parent:"cat"},
+	{id:"chihuahu", parent:"dog"},
+	{id:"boxer", parent:"dog"},
+	{id:"rottweiller", parent:"dog"},
+	{id:"budgie", parent:"bird"},
+	{id:"parrot", parent:"bird"},
+	{id:"guppie", parent:"fresh water"},
+	{id:"clown", parent:"tropical"},
+	{id:"dori", parent:"tropical"},
+	{id:"angel", parent:"fresh water"},
+	]
+	
+
+console.log(JSON.stringify(makeTree(myList, null), null,3))	
+	
+</script>
