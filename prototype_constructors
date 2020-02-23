@@ -1,0 +1,38 @@
+<script>
+  // constructors must be function not arrow function to work
+  const Person = function(name, yearOfBirth, job) {
+    this.name = name;
+    this.yearOfBirth = yearOfBirth;
+    this.job = job;
+  };
+  const john = new Person("Joe", 1973, "Designer");
+  console.log(JSON.stringify(john, null, 2));
+
+  // arrow function will not decrease as this is not bound to object
+  let cat = {
+    lives: 9,
+    jumps: () => {
+      this.lives--; // won't work
+      cat.lives--; // will work
+    }
+  };
+  console.log(cat);
+  cat.jumps();
+  console.log(cat);
+
+  // function call will decrease as this is part of the object -
+  // NB if calling in an inner function you have to function.bind(this) to get to parent scope
+  let dog = {
+    lives: 9,
+    jumps: function() {
+      this.lives--;
+      let jump = function() {
+        this.lives--;
+      }.bind(this);
+      jump();
+    }
+  };
+  console.log(dog);
+  dog.jumps();
+  console.log(dog);
+</script>
